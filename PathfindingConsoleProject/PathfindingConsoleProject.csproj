@@ -57,5 +57,10 @@
   <ItemGroup>
     <Folder Include="Algorithms\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\first-names.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

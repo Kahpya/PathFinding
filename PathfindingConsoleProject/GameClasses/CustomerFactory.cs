@@ -3,11 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using PathfindingConsoleProject.DataStructures;
 
 namespace PathfindingConsoleProject.GameClasses
 {
-    class CustomerFactory
+    public class CustomerFactory
     {
+        public bool CanCreateNewCustomer
+        {
+            get => availableNames.Count > 0;
+        }
 
+        GenericList<string> availableNames;
+        int maxNumberOfItemsInShoppingList;
+
+        public CustomerFactory(int maxNumberOfItemsInShoppingList)
+        {
+            this.maxNumberOfItemsInShoppingList = maxNumberOfItemsInShoppingList +1;
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader("Assets/first-names.txt"))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    String line = sr.ReadToEnd();
+                    availableNames.Add(line);
+                }
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
+        public Customer Create()
+        {
+            if (! CanCreateNewCustomer)
+            {
+                return null;
+            }
+
+            int randomIndex = GetRandomInteger(0, availableNames.Count);
+            int randomItemLength = GetRandomInteger(1, maxNumberOfItemsInShoppingList + 1); // +1 to allow inclusive max
+
+            string name = availableNames[randomIndex];
+            GenericList<Item> shoppingBasket = new GenericList<Item>();
+
+            for (int i = 0; i < randomItemLength; i++)
+            {
+                ItemType randomItemType = (ItemType)GetRandomInteger(0, Enum.GetNames(typeof(ItemType)).Length);
+                shoppingBasket.Add(new Item(randomItemType));
+            }
+
+            availableNames.Remove(name);
+
+            return new Customer(name, shoppingBasket);
+        }
+
+        private int GetRandomInteger(int min, int max)
+        {
+            Random r = new Random();
+
+            return r.Next(min, max);
+        }
     }
 }

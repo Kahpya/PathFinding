@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PathfindingConsoleProject.GameClasses;
+using PathfindingConsoleProject.DataStructures;
 
 namespace PathfindingConsoleProject
 {
@@ -13,6 +15,13 @@ namespace PathfindingConsoleProject
         static void Main(string[] args)
         {
             bool exit = false;
+            long msBetweenNewCustomers = 1000;
+            long currentTimeGoal = 0;
+
+            CustomerFactory customerFactory = new CustomerFactory(5);
+            GenericList<Customer> customersInStore = new GenericList<Customer>();
+
+            PointOfPurchase.Instance.SetCustomerInStoreReference(ref customersInStore);
 
             PrintStartingScreen();
 
@@ -20,10 +29,28 @@ namespace PathfindingConsoleProject
             {
                 // PLAY GAME
 
+                // Check for and spawn new customers
+                if (customerFactory.CanCreateNewCustomer && currentTimeGoal < DateTimeOffset.Now.ToUnixTimeMilliseconds())
+                {
+                    customersInStore.Add(customerFactory.Create());
 
+                    currentTimeGoal = DateTimeOffset.Now.ToUnixTimeMilliseconds() + msBetweenNewCustomers;
+                }
+
+                // Handle customer business
+                foreach (Customer customer in customersInStore)
+                {
+                    customer.MoveTowardsNextNode();
+                }
+
+                // Handle checkout point business
+                PointOfPurchase.Instance.ParseNextCustomerInQueue();
 
                 // Handle gracefull exit
                 exit = CheckForEscPressed();
+
+                // TEMPORARY FOR DISPLAY :) :) 
+                Thread.Sleep(50);
             }
         }
 
