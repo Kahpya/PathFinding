@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace PathfindingConsoleProject.DataStructures
 {
-    public class GenericList<T> : ICollection<T>, ICollection where T :IComparable<T>
+    public class GenericList<T> : ICollection<T>, ICollection
     {
         public T this[int index]
         {
@@ -102,7 +102,14 @@ namespace PathfindingConsoleProject.DataStructures
             {
                 for (int j = removeIndex;  j < Count;  j++)
                 {
-                    list[j] = list[j + 1];
+                    if (Count > 1 && (j + 1) <= size)
+                    {
+                        list[j] = list[j + 1];
+                    }
+                    else
+                    {
+                        list[j] = default;
+                    }
                 }
 
                 Count--;
