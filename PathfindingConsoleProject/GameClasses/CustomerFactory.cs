@@ -17,6 +17,7 @@ namespace PathfindingConsoleProject.GameClasses
 
         GenericList<string> availableNames;
         int maxNumberOfItemsInShoppingList;
+        Random r = new Random();
 
         public CustomerFactory(int maxNumberOfItemsInShoppingList)
         {
@@ -72,8 +73,6 @@ namespace PathfindingConsoleProject.GameClasses
 
         private int GetRandomInteger(int min, int max)
         {
-            Random r = new Random();
-
             return r.Next(min, max);
         }
     }

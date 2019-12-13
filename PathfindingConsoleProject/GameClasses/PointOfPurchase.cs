@@ -45,7 +45,7 @@ namespace PathfindingConsoleProject.GameClasses
 
         public void ParseNextCustomerInQueue()
         {
-            if (this.customersInQueue.Count < 0)
+            if (this.customersInQueue.Count > 0)
             {
                 Customer customer = this.customersInQueue[0];
                 this.customersInQueue.Remove(customer);
