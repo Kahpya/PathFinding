@@ -47,6 +47,7 @@
     <Compile Include="GameClasses\CustomerFactory.cs" />
     <Compile Include="GameClasses\Item.cs" />
     <Compile Include="GameClasses\PointOfPurchase.cs" />
+    <Compile Include="DataStructures\GenericList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,7 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Algorithms\" />
-    <Folder Include="DataStructures\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
