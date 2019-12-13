@@ -21,7 +21,7 @@ namespace PathfindingConsoleProject
             CustomerFactory customerFactory = new CustomerFactory(5);
             GenericList<Customer> customersInStore = new GenericList<Customer>();
 
-            PointOfPurchase.Instance.SetCustomerInStoreReference(ref customersInStore);
+            PointOfPurchase.Instance.SetCustomerInStoreReference(customersInStore);
 
             PrintStartingScreen();
 

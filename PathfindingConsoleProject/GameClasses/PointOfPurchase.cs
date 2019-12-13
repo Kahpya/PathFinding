@@ -32,7 +32,7 @@ namespace PathfindingConsoleProject.GameClasses
             customersInQueue = new GenericList<Customer>();
         }
 
-        public void SetCustomerInStoreReference(ref GenericList<Customer> customersInStore)
+        public void SetCustomerInStoreReference(GenericList<Customer> customersInStore)
         {
             this.customersInStore = customersInStore;
         }
