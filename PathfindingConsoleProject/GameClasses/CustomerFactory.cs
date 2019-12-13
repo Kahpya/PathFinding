@@ -21,13 +21,20 @@ namespace PathfindingConsoleProject.GameClasses
         public CustomerFactory(int maxNumberOfItemsInShoppingList)
         {
             this.maxNumberOfItemsInShoppingList = maxNumberOfItemsInShoppingList +1;
+            this.availableNames = new GenericList<string>();
+
             try
             {   // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader("Assets/first-names.txt"))
                 {
                     // Read the stream to a string, and write the string to the console.
-                    String line = sr.ReadToEnd();
-                    availableNames.Add(line);
+
+                    string line = string.Empty;
+
+                    while((line = sr.ReadLine()) != null)
+                    {
+                        availableNames.Add(line);
+                    }
                 }
             }
             catch (IOException e)
