@@ -169,12 +169,16 @@ namespace PathfindingConsoleProject
 
         static GenericList<GenericGraphNode> SearchStuff (GenericGraphNode source, GenericGraphNode goal)
         {
+            // Tilføj start noden til søgeliste
             GenericList<GenericGraphNode> searchList = new GenericList<GenericGraphNode>();
             searchList.Add(source);
 
+            // Hjælpelister til at holde styr på, hvad der er besøgt allerede
+            // Bruges også til at beregne, hvilke noder som er sammenhængende til korteste path
             GenericList<GenericGraphNode> cameFromKey = new GenericList<GenericGraphNode>();
             GenericList<GenericGraphNode> cameFromValue = new GenericList<GenericGraphNode>();
 
+            // Listen over, hvilken path der skal returneres
             GenericList<GenericGraphNode> pathList = new GenericList<GenericGraphNode>();
             int iterations = 0;
             while (searchList.Count > 0)
@@ -185,6 +189,8 @@ namespace PathfindingConsoleProject
                 foreach (GenericGraphEdge edge in current.Edges)
                 {
                     iterations += 1;
+
+                    // Find næste node fra hver edge, som ikke er den samme som Current
                     GenericGraphNode nextNode = (current.Equals(edge.FromNode)) ? edge.ToNode : edge.FromNode;
 
                     if (current.Equals(goal))
@@ -199,6 +205,8 @@ namespace PathfindingConsoleProject
                         return pathList;
                     }
 
+                    // VIRKER MÅSKE IKKE HELT?
+                    // HVORFOR I ALVERDEN ER DER SÅ MANGE FANDENS ITERATIONER?!?!
                     if (! cameFromValue.Contains(nextNode))
                     {
                         searchList.Add(nextNode);
