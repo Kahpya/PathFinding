@@ -162,7 +162,9 @@ namespace PathfindingConsoleProject.DataStructures
                 newSize *= 2;
             }
 
-            list = new T[newSize];
+            this.size = newSize;
+
+            list = new T[this.size];
 
             temp.CopyTo(list, 0);
         }
