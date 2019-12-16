@@ -12,12 +12,29 @@ namespace PathfindingConsoleProject
 {
     class Program
     {
+        // Length of this array must match the ItemType enum length
+        // Values must match an index in the storeMap (ie between 0 & mapWidth * mapHeight)
+        public static int[] ItemLocationGridArray = new int[]
+        {
+            7,
+            23,
+            49,
+            50,
+            75,
+            91
+        };
+
+        public static GenericGraph StoreMapLayout;
         public static ConsoleColor TextColorPointOfPurchase = ConsoleColor.Green;
         public static ConsoleColor TextColorCustomerPickUpItem = ConsoleColor.Blue;
         public static ConsoleColor TextColorCustomerMoves = ConsoleColor.Yellow;
         public static ConsoleColor TextColorCustomerEnterStore = ConsoleColor.Cyan;
         public static Random RandomNumberGenerator = new Random();
         private static double chanceToSpawnCustomer = 0.3;
+        private static int mapWidth = 10;
+        private static int mapHeight = 10;
+
+        
 
         static void Main(string[] args)
         {
@@ -27,8 +44,12 @@ namespace PathfindingConsoleProject
 
             CustomerFactory customerFactory = new CustomerFactory(5);
             GenericList<Customer> customersInStore = new GenericList<Customer>();
+            StoreMapLayout = CreateGraphMap();
 
             PointOfPurchase.Instance.SetCustomerInStoreReference(customersInStore);
+
+            // Set point of purchase in lower right corner of shop
+            PointOfPurchase.Instance.SetNodeReference(StoreMapLayout[StoreMapLayout.Count - 1]);
 
             PrintStartingScreen();
 
@@ -57,6 +78,49 @@ namespace PathfindingConsoleProject
                 exit = CheckForKeyPressed();
                 Console.WriteLine(string.Empty);
             }
+        }
+
+        static GenericGraph CreateGraphMap()
+        {
+            GenericGraph map = new GenericGraph();
+
+            for (int i = 0; i < mapHeight; i++)
+            {
+                for (int j = 0; j < mapWidth; j++)
+                {
+                    int thisIndex = (i * mapWidth) + j;
+
+                    if (i == 0 && j == 0)
+                    {
+                        map.Add(); // Add upper left corner
+                    }
+                    else if (i == 0 && j > 0)
+                    {
+                        map.Add(map[j - 1]); // add first row
+                    }
+                    else
+                    {
+                        int upperIndex = ((i - 1) * mapWidth) + j;
+
+                        if (j == 0)
+                        {
+                            map.Add(map[upperIndex]);
+                        }
+                        else if (j > 0)
+                        {
+                            GenericGraphNode[] targetNodes = new GenericGraphNode[2]
+                            {
+                                map[upperIndex],
+                                map[j -1]
+                            };
+
+                            map.Add(targetNodes);
+                        }
+                    }
+                }
+            }
+
+            return map;
         }
 
         static bool CheckForKeyPressed()

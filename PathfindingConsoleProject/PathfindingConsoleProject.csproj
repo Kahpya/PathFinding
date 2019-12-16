@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructures\GenericGraph.cs" />
+    <Compile Include="DataStructures\GenericGraphEdge.cs" />
+    <Compile Include="DataStructures\GenericGraphNode.cs" />
     <Compile Include="GameClasses\Customer.cs" />
     <Compile Include="GameClasses\CustomerFactory.cs" />
     <Compile Include="GameClasses\Item.cs" />

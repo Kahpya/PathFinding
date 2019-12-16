@@ -22,8 +22,11 @@ namespace PathfindingConsoleProject.GameClasses
             }
         }
 
+        public GenericGraphNode StoreLocation { get => storeLocation; }
+
         private static PointOfPurchase instance;
         private GenericList<Customer> customersInStore;
+        private GenericGraphNode storeLocation;
 
         private GenericList<Customer> customersInQueue;
 
@@ -53,6 +56,11 @@ namespace PathfindingConsoleProject.GameClasses
                 Console.ForegroundColor = Program.TextColorPointOfPurchase;
                 Console.WriteLine(customer.Name + " paid and left the store.");
             }
+        }
+
+        public void SetNodeReference(GenericGraphNode node)
+        {
+            this.storeLocation = node;
         }
     }
 }

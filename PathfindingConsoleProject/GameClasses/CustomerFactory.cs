@@ -61,6 +61,7 @@ namespace PathfindingConsoleProject.GameClasses
 
             for (int i = 0; i < randomItemLength; i++)
             {
+                // Find random item from enum length
                 ItemType randomItemType = (ItemType)Program.RandomNumberGenerator.Next(0, Enum.GetNames(typeof(ItemType)).Length);
                 shoppingBasket.Add(new Item(randomItemType));
             }
@@ -70,7 +71,8 @@ namespace PathfindingConsoleProject.GameClasses
             Console.ForegroundColor = Program.TextColorCustomerEnterStore;
             Console.WriteLine(name + " has entered the store.");
 
-            return new Customer(name, shoppingBasket);
+            // Create new customer who is starting at the same position as the kasseapparat
+            return new Customer(name, shoppingBasket, PointOfPurchase.Instance.StoreLocation);
         }
     }
 }

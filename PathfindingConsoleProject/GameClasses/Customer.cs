@@ -10,17 +10,20 @@ namespace PathfindingConsoleProject.GameClasses
     public class Customer
     {
         public string Name { get => name; }
+        public GenericGraphNode CustomerLocation { get => customerLocation; }
 
         private string name;
 
         private GenericList<Item> shoppingList;
         private GenericList<Item> shoppingBasket;
+        private GenericGraphNode customerLocation;
         
-        public Customer(string name, GenericList<Item> items)
+        public Customer(string name, GenericList<Item> items, GenericGraphNode startLocation)
         {
             this.name = name;
             this.shoppingList = items;
             this.shoppingBasket = new GenericList<Item>();
+            this.customerLocation = startLocation;
         }
 
         public void MoveTowardsNextNode()
