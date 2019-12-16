@@ -124,7 +124,7 @@ namespace PathfindingConsoleProject.DataStructures
                     }
                     else
                     {
-                        list[j] = default;
+                        list[j] = default(T);
                     }
                 }
 

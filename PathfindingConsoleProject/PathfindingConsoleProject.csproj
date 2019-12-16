@@ -43,6 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructures\GenericGraph.cs" />
+    <Compile Include="DataStructures\GenericGraphEdge.cs" />
+    <Compile Include="DataStructures\GenericGraphNode.cs" />
+    <Compile Include="GameClasses\Customer.cs" />
+    <Compile Include="GameClasses\CustomerFactory.cs" />
+    <Compile Include="GameClasses\Item.cs" />
+    <Compile Include="GameClasses\PointOfPurchase.cs" />
     <Compile Include="DataStructures\GenericList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Algorithms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\first-names.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
