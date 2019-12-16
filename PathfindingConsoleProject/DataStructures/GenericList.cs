@@ -23,6 +23,7 @@ namespace PathfindingConsoleProject.DataStructures
                 if (0 <= index && index < Count)
                 {
                     list[index] = value;
+                    return;
                 }
 
                 throw new IndexOutOfRangeException();
@@ -55,15 +56,25 @@ namespace PathfindingConsoleProject.DataStructures
 
         public void Add(T item)
         {
-            list[Count] = item;
-            Count++;
+            AddRange(new T[] { item } );
+        }
 
-            Resize();
+        public void AddRange(T[] items)
+        {
+            if (Count + items.Length > size)
+            {
+                Resize(items.Length);
+            }
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                list[Count++] = items[i];
+            }
         }
 
         public void Clear()
         {
-            list = new T[size];
+            list = new T[4];
             Count = 0;
         }
 
@@ -80,9 +91,14 @@ namespace PathfindingConsoleProject.DataStructures
             return false;
         }
 
+        public void CopyTo(Array array, int index)
+        {
+            list.CopyTo(array, index);
+        }
+
         public void CopyTo(T[] array, int arrayIndex)
         {
-            
+            CopyTo(array as Array, arrayIndex);
         }
 
         public bool Remove(T item)
@@ -133,25 +149,22 @@ namespace PathfindingConsoleProject.DataStructures
             return GetEnumerator();
         }
 
-        private void Resize()
+
+        private void Resize(int size)
         {
-            if (Count == size)
+            int newSize = this.size;
+            T[] temp = new T[this.size];
+
+            CopyTo(temp, 0);
+
+            while (Count + size > newSize)
             {
-                T[] temp = new T[size];
-                list.CopyTo(temp, 0);
-
-                int newSize = size * 2;
-
-                list = new T[newSize];
-                size = newSize;
-
-                temp.CopyTo(list, 0);
+                newSize *= 2;
             }
-        }
 
-        public void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException();
+            list = new T[newSize];
+
+            temp.CopyTo(list, 0);
         }
     }
 }
