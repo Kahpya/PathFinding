@@ -50,6 +50,7 @@ namespace PathfindingConsoleProject.GameClasses
                 Customer customer = this.customersInQueue[0];
                 this.customersInQueue.Remove(customer);
 
+                Console.ForegroundColor = Program.TextColorPointOfPurchase;
                 Console.WriteLine(customer.Name + " paid and left the store.");
             }
         }

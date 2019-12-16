@@ -12,6 +12,13 @@ namespace PathfindingConsoleProject
 {
     class Program
     {
+        public static ConsoleColor TextColorPointOfPurchase = ConsoleColor.Green;
+        public static ConsoleColor TextColorCustomerPickUpItem = ConsoleColor.Blue;
+        public static ConsoleColor TextColorCustomerMoves = ConsoleColor.Yellow;
+        public static ConsoleColor TextColorCustomerEnterStore = ConsoleColor.Cyan;
+        public static Random RandomNumberGenerator = new Random();
+        private static double chanceToSpawnCustomer = 0.3;
+
         static void Main(string[] args)
         {
             bool exit = false;
@@ -30,7 +37,7 @@ namespace PathfindingConsoleProject
                 // PLAY GAME
 
                 // Check for and spawn new customers
-                if (customerFactory.CanCreateNewCustomer && currentTimeGoal < DateTimeOffset.Now.ToUnixTimeMilliseconds())
+                if (customerFactory.CanCreateNewCustomer && customersInStore.Count == 0 || customerFactory.CanCreateNewCustomer && RandomNumberGenerator.NextDouble() < chanceToSpawnCustomer)
                 {
                     customersInStore.Add(customerFactory.Create());
 
@@ -46,17 +53,15 @@ namespace PathfindingConsoleProject
                 // Handle checkout point business
                 PointOfPurchase.Instance.ParseNextCustomerInQueue();
 
-                // Handle gracefull exit
-                exit = CheckForEscPressed();
-
-                // TEMPORARY FOR DISPLAY :) :) 
-                Thread.Sleep(50);
+                // Handle gracefull exit and step through to next iteration
+                exit = CheckForKeyPressed();
+                Console.WriteLine(string.Empty);
             }
         }
 
-        static bool CheckForEscPressed()
+        static bool CheckForKeyPressed()
         {
-            if(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape)
+            if(Console.ReadKey(true).Key == ConsoleKey.Escape)
             {
                 return true;
             }
@@ -68,6 +73,7 @@ namespace PathfindingConsoleProject
             Console.WriteLine("*******************************************************");
             Console.WriteLine("*******************************************************");
             Console.WriteLine("************* Press 'Escape' to exit game *************");
+            Console.WriteLine("*********** Press any other key to progress ***********");
             Console.WriteLine("*******************************************************");
             Console.WriteLine("*******************************************************");
             Thread.Sleep(500);
@@ -77,6 +83,7 @@ namespace PathfindingConsoleProject
             Thread.Sleep(1000);
             Console.WriteLine("1...");
             Thread.Sleep(1000);
+            Console.WriteLine(string.Empty);
         }
     }
 }

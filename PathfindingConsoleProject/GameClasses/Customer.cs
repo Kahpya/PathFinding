@@ -33,6 +33,7 @@ namespace PathfindingConsoleProject.GameClasses
                 Item nextItem = shoppingList[0];
                 shoppingList.Remove(nextItem);
 
+                Console.ForegroundColor = Program.TextColorCustomerPickUpItem;
                 Console.WriteLine(this.name + " Picked up " + nextItem.ItemType.ToString() + " from an aisle.");
             }
             else

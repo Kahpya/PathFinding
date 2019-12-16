@@ -17,7 +17,6 @@ namespace PathfindingConsoleProject.GameClasses
 
         GenericList<string> availableNames;
         int maxNumberOfItemsInShoppingList;
-        Random r = new Random();
 
         public CustomerFactory(int maxNumberOfItemsInShoppingList)
         {
@@ -54,26 +53,24 @@ namespace PathfindingConsoleProject.GameClasses
                 return null;
             }
 
-            int randomIndex = GetRandomInteger(0, availableNames.Count);
-            int randomItemLength = GetRandomInteger(1, maxNumberOfItemsInShoppingList + 1); // +1 to allow inclusive max
+            int randomIndex = Program.RandomNumberGenerator.Next(0, availableNames.Count);
+            int randomItemLength = Program.RandomNumberGenerator.Next(1, maxNumberOfItemsInShoppingList + 1); // +1 to allow inclusive max
 
             string name = availableNames[randomIndex];
             GenericList<Item> shoppingBasket = new GenericList<Item>();
 
             for (int i = 0; i < randomItemLength; i++)
             {
-                ItemType randomItemType = (ItemType)GetRandomInteger(0, Enum.GetNames(typeof(ItemType)).Length);
+                ItemType randomItemType = (ItemType)Program.RandomNumberGenerator.Next(0, Enum.GetNames(typeof(ItemType)).Length);
                 shoppingBasket.Add(new Item(randomItemType));
             }
 
             availableNames.Remove(name);
 
-            return new Customer(name, shoppingBasket);
-        }
+            Console.ForegroundColor = Program.TextColorCustomerEnterStore;
+            Console.WriteLine(name + " has entered the store.");
 
-        private int GetRandomInteger(int min, int max)
-        {
-            return r.Next(min, max);
+            return new Customer(name, shoppingBasket);
         }
     }
 }
