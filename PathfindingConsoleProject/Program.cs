@@ -51,6 +51,14 @@ namespace PathfindingConsoleProject
             // Set point of purchase in lower right corner of shop
             PointOfPurchase.Instance.SetNodeReference(StoreMapLayout[StoreMapLayout.Count - 1]);
 
+            GenericList<GenericGraphNode> n = SearchStuff(StoreMapLayout[4], StoreMapLayout[7]);
+
+            // PRINT LIGE LISTEN UD :) o.O
+            for (int i = 0; i < n.Count; i++)
+            {
+                Console.WriteLine($"Moving from node at {n[i].x}, {n[i].y}");
+            }
+
             PrintStartingScreen();
 
             while (! exit)
@@ -92,11 +100,15 @@ namespace PathfindingConsoleProject
 
                     if (i == 0 && j == 0)
                     {
-                        map.Add(); // Add upper left corner
+                        GenericGraphNode node = map.Add(); // Add upper left corner
+                        node.x = j;
+                        node.y = i;
                     }
                     else if (i == 0 && j > 0)
                     {
-                        map.Add(map[j - 1]); // add first row
+                        GenericGraphNode node = map.Add(map[j - 1]); // add first row
+                        node.x = j;
+                        node.y = i;
                     }
                     else
                     {
@@ -104,17 +116,21 @@ namespace PathfindingConsoleProject
 
                         if (j == 0)
                         {
-                            map.Add(map[upperIndex]);
+                            GenericGraphNode node = map.Add(map[upperIndex]);
+                            node.x = j;
+                            node.y = i;
                         }
                         else if (j > 0)
                         {
                             GenericGraphNode[] targetNodes = new GenericGraphNode[2]
                             {
                                 map[upperIndex],
-                                map[j -1]
+                                map[thisIndex -1]
                             };
 
-                            map.Add(targetNodes);
+                            GenericGraphNode node = map.Add(targetNodes);
+                            node.x = j;
+                            node.y = i;
                         }
                     }
                 }
@@ -148,6 +164,51 @@ namespace PathfindingConsoleProject
             Console.WriteLine("1...");
             Thread.Sleep(1000);
             Console.WriteLine(string.Empty);
+        }
+
+
+        static GenericList<GenericGraphNode> SearchStuff (GenericGraphNode source, GenericGraphNode goal)
+        {
+            GenericList<GenericGraphNode> searchList = new GenericList<GenericGraphNode>();
+            searchList.Add(source);
+
+            GenericList<GenericGraphNode> cameFromKey = new GenericList<GenericGraphNode>();
+            GenericList<GenericGraphNode> cameFromValue = new GenericList<GenericGraphNode>();
+
+            GenericList<GenericGraphNode> pathList = new GenericList<GenericGraphNode>();
+            int iterations = 0;
+            while (searchList.Count > 0)
+            {
+                GenericGraphNode current = searchList[0];
+                searchList.Remove(current);
+
+                foreach (GenericGraphEdge edge in current.Edges)
+                {
+                    iterations += 1;
+                    GenericGraphNode nextNode = (current.Equals(edge.FromNode)) ? edge.ToNode : edge.FromNode;
+
+                    if (current.Equals(goal))
+                    {
+                        pathList.Add(current);
+                        while(cameFromKey.IndexOf(pathList.Last()) > -1)
+                        {
+                            int keyIndex = cameFromKey.IndexOf(pathList.Last());
+                            pathList.Add(cameFromValue[keyIndex]);
+                        }
+                        Console.WriteLine("ITERATIONS: " + iterations);
+                        return pathList;
+                    }
+
+                    if (! cameFromValue.Contains(nextNode))
+                    {
+                        searchList.Add(nextNode);
+                        cameFromKey.Add(nextNode);
+                        cameFromValue.Add(current);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

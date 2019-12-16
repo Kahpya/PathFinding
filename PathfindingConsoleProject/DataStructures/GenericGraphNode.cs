@@ -8,7 +8,10 @@ namespace PathfindingConsoleProject.DataStructures
 {
     public class GenericGraphNode
     {
-        GenericGraphEdge[] Edges { get => edges; }
+        public int x;
+        public int y;
+
+        public GenericGraphEdge[] Edges { get => edges; }
         GenericGraphEdge[] edges;
 
         public GenericGraphNode()

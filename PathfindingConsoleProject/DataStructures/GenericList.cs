@@ -78,6 +78,18 @@ namespace PathfindingConsoleProject.DataStructures
             Count = 0;
         }
 
+        public int IndexOf(T item)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (item.Equals(list[i]))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
         public bool Contains(T item)
         {
             for (int i = 0; i < Count; i++)
@@ -118,7 +130,7 @@ namespace PathfindingConsoleProject.DataStructures
             {
                 for (int j = removeIndex;  j < Count;  j++)
                 {
-                    if (Count > 1 && (j + 1) <= size)
+                    if (Count > 1 && (j + 1) < size)
                     {
                         list[j] = list[j + 1];
                     }
