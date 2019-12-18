@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\BreathFirstSeach.cs" />
     <Compile Include="DataStructures\GenericGraph.cs" />
     <Compile Include="DataStructures\GenericGraphNode.cs" />
     <Compile Include="GameClasses\Customer.cs" />
@@ -56,9 +57,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Algorithms\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\first-names.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
