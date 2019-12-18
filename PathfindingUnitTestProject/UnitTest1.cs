@@ -2,6 +2,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using PathfindingConsoleProject.Algorithms;
 using PathfindingConsoleProject.DataStructures;
 
 namespace PathfindingUnitTestProject
@@ -9,6 +10,7 @@ namespace PathfindingUnitTestProject
     [TestClass]
     public class UnitTest1
     {
+        #region GenericList Unit Tests
         [TestMethod]
         public void GenericList_Not_Null()
         {
@@ -237,5 +239,6 @@ namespace PathfindingUnitTestProject
 
             object sync = actual.SyncRoot;
         }
+        #endregion
     }
 }
