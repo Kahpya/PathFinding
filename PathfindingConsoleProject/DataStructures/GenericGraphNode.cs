@@ -11,28 +11,23 @@ namespace PathfindingConsoleProject.DataStructures
         public int x;
         public int y;
 
-        public GenericGraphEdge[] Edges { get => edges; }
-        GenericGraphEdge[] edges;
+        public GenericGraphNode[] Neighbours { get => neighbours; }
+        GenericGraphNode[] neighbours;
 
         public GenericGraphNode()
         {
-            this.edges = new GenericGraphEdge[] { };
-        }
-
-        public GenericGraphNode(GenericGraphEdge[] edges)
-        {
-            this.edges = edges;
+            this.neighbours = new GenericGraphNode[] { };
         }
 
         public GenericGraphNode(GenericGraphNode node)
         {
-            this.edges = new GenericGraphEdge[] { };
+            this.neighbours = new GenericGraphNode[] { };
             AddEdgeTowardsNode(node);
         }
 
         public GenericGraphNode(GenericGraphNode[] nodes)
         {
-            this.edges = new GenericGraphEdge[] { };
+            this.neighbours = new GenericGraphNode[] { };
             for (int i = 0; i < nodes.Length; i++)
             {
                 AddEdgeTowardsNode(nodes[i]);
@@ -41,23 +36,25 @@ namespace PathfindingConsoleProject.DataStructures
 
         public void AddEdgeTowardsNode(GenericGraphNode targetNode)
         {
-            GenericGraphEdge newEdge = new GenericGraphEdge(targetNode, this);
-
-            AddEdge(newEdge);
-            targetNode.AddEdge(newEdge);
+            AddEdge(targetNode);
+            targetNode.AddEdge(this);
         }
 
-        public void AddEdge(GenericGraphEdge edge)
+        public void AddEdge(GenericGraphNode neighbour)
         {
-            GenericGraphEdge[] newEdges = new GenericGraphEdge[edges.Length + 1];
-
-            for (int i = 0; i < edges.Length; i++)
+            if (neighbour.Equals(this))
             {
-                newEdges[i] = edges[i];
+                return;
+            }
+            GenericGraphNode[] newEdges = new GenericGraphNode[neighbours.Length + 1];
+
+            for (int i = 0; i < neighbours.Length; i++)
+            {
+                newEdges[i] = neighbours[i];
             }
 
-            newEdges[newEdges.Length - 1] = edge;
-            edges = newEdges;
+            newEdges[newEdges.Length - 1] = neighbour;
+            neighbours = newEdges;
         }
     }
 }

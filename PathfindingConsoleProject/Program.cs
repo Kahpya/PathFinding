@@ -51,7 +51,7 @@ namespace PathfindingConsoleProject
             // Set point of purchase in lower right corner of shop
             PointOfPurchase.Instance.SetNodeReference(StoreMapLayout[StoreMapLayout.Count - 1]);
 
-            GenericList<GenericGraphNode> n = SearchStuff(StoreMapLayout[4], StoreMapLayout[7]);
+            GenericList<GenericGraphNode> n = SearchStuff(StoreMapLayout[99], StoreMapLayout[0]);
 
             // PRINT LIGE LISTEN UD :) o.O
             for (int i = 0; i < n.Count; i++)
@@ -166,9 +166,13 @@ namespace PathfindingConsoleProject
             Console.WriteLine(string.Empty);
         }
 
-
         static GenericList<GenericGraphNode> SearchStuff (GenericGraphNode source, GenericGraphNode goal)
         {
+            if (source.Equals(goal))
+            {
+                return new GenericList<GenericGraphNode>() { source };
+            }
+
             // Tilføj start noden til søgeliste
             GenericList<GenericGraphNode> searchList = new GenericList<GenericGraphNode>();
             searchList.Add(source);
@@ -185,33 +189,32 @@ namespace PathfindingConsoleProject
             {
                 GenericGraphNode current = searchList[0];
                 searchList.Remove(current);
+                GenericGraphNode[] validNeighbours = Array.FindAll(current.Neighbours, n => !cameFromValue.Contains(n));
 
-                foreach (GenericGraphEdge edge in current.Edges)
+                foreach (GenericGraphNode neighbour in validNeighbours)
                 {
                     iterations += 1;
 
                     // Find næste node fra hver edge, som ikke er den samme som Current
-                    GenericGraphNode nextNode = (current.Equals(edge.FromNode)) ? edge.ToNode : edge.FromNode;
+                    GenericGraphNode nextNode = neighbour;
 
-                    if (current.Equals(goal))
-                    {
-                        pathList.Add(current);
-                        while(cameFromKey.IndexOf(pathList.Last()) > -1)
-                        {
-                            int keyIndex = cameFromKey.IndexOf(pathList.Last());
-                            pathList.Add(cameFromValue[keyIndex]);
-                        }
-                        Console.WriteLine("ITERATIONS: " + iterations);
-                        return pathList;
-                    }
-
-                    // VIRKER MÅSKE IKKE HELT?
-                    // HVORFOR I ALVERDEN ER DER SÅ MANGE FANDENS ITERATIONER?!?!
-                    if (! cameFromValue.Contains(nextNode))
+                    if (! cameFromKey.Contains(nextNode))
                     {
                         searchList.Add(nextNode);
                         cameFromKey.Add(nextNode);
                         cameFromValue.Add(current);
+
+                        if (nextNode.Equals(goal))
+                        {
+                            pathList.Add(nextNode);
+                            while (cameFromKey.IndexOf(pathList.Last()) > -1)
+                            {
+                                int keyIndex = cameFromKey.IndexOf(pathList.Last());
+                                pathList.Add(cameFromValue[keyIndex]);
+                            }
+                            Console.WriteLine("ITERATIONS: " + iterations);
+                            return pathList;
+                        }
                     }
                 }
             }
