@@ -27,17 +27,22 @@ namespace PathfindingConsoleProject.GameClasses
         }
 
         public void MoveTowardsNextNode()
-        {
-            // TODO: Create graphs stuff
-            
+        {            
             // Temporary stuff without pathfinding:
             if (shoppingList.Count > 0)
             {
                 Item nextItem = shoppingList[0];
-                shoppingList.Remove(nextItem);
+                if (! this.customerLocation.Equals(nextItem.ItemLocation))
+                {
+                    
+                }
+                else
+                {
+                    shoppingList.Remove(nextItem);
 
-                Console.ForegroundColor = Program.TextColorCustomerPickUpItem;
-                Console.WriteLine(this.name + " Picked up " + nextItem.ItemType.ToString() + " from an aisle.");
+                    Console.ForegroundColor = Program.TextColorCustomerPickUpItem;
+                    Console.WriteLine(this.name + " Picked up " + nextItem.ItemType.ToString() + " from an aisle.");
+                }                
             }
             else
             {

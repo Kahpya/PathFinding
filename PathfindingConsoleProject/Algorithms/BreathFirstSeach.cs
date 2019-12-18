@@ -4,32 +4,61 @@ using PathfindingConsoleProject.DataStructures;
 
 namespace PathfindingConsoleProject.Algorithms
 {
-    public class BreathFirstSeach
+    public static class BreathFirstSeach
     {
-        private GenericList<GenericGraph> nodes;
-
-        public BreathFirstSeach()
-        { }
-
-        public GenericGraphNode[] BFS(GenericGraph graph, GenericGraphNode source, GenericGraph goal)
+        static GenericList<GenericGraphNode> FindPathBetweenNodes(GenericGraphNode source, GenericGraphNode goal)
         {
-            GenericGraphNode[] path;
-
-            GenericList<GenericGraphNode> currentPath = new GenericList<GenericGraphNode>();
-            currentPath.Add(source);
-
             if (source.Equals(goal))
             {
-                path = new GenericGraphNode[currentPath.Count];
-                currentPath.CopyTo(path, 0);
-                return path;
+                return new GenericList<GenericGraphNode>() { source };
             }
 
+            // Tilføj start noden til søgeliste
+            GenericList<GenericGraphNode> searchList = new GenericList<GenericGraphNode>();
+            searchList.Add(source);
 
+            // Hjælpelister til at holde styr på, hvad der er besøgt allerede
+            // Bruges også til at beregne, hvilke noder som er sammenhængende til korteste path
+            GenericList<GenericGraphNode> cameFromKey = new GenericList<GenericGraphNode>();
+            GenericList<GenericGraphNode> cameFromValue = new GenericList<GenericGraphNode>();
 
+            // Listen over, hvilken path der skal returneres
+            GenericList<GenericGraphNode> pathList = new GenericList<GenericGraphNode>();
+            int iterations = 0;
+            while (searchList.Count > 0)
+            {
+                GenericGraphNode current = searchList[0];
+                searchList.Remove(current);
+                GenericGraphNode[] validNeighbours = Array.FindAll(current.Neighbours, n => !cameFromValue.Contains(n));
 
+                foreach (GenericGraphNode neighbour in validNeighbours)
+                {
+                    iterations += 1;
 
-            return BFS(graph, parrent, goal);
+                    // Find næste node fra hver edge, som ikke er den samme som Current
+                    GenericGraphNode nextNode = neighbour;
+
+                    if (!cameFromKey.Contains(nextNode))
+                    {
+                        searchList.Add(nextNode);
+                        cameFromKey.Add(nextNode);
+                        cameFromValue.Add(current);
+
+                        if (nextNode.Equals(goal))
+                        {
+                            pathList.Add(nextNode);
+                            while (cameFromKey.IndexOf(pathList[pathList.Count - 1]) > -1)
+                            {
+                                int keyIndex = cameFromKey.IndexOf(pathList[pathList.Count - 1]);
+                                pathList.Add(cameFromValue[keyIndex]);
+                            }
+                            return pathList;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }
