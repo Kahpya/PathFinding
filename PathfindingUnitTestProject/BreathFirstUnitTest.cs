@@ -125,14 +125,14 @@ namespace PathfindingUnitTestProject
                     if (i == 0 && j == 0)
                     {
                         GenericGraphNode node = map.Add(); // Add upper left corner
-                        node.x = j;
-                        node.y = i;
+                        node.X = j;
+                        node.Y = i;
                     }
                     else if (i == 0 && j > 0)
                     {
                         GenericGraphNode node = map.Add(map[j - 1]); // add first row
-                        node.x = j;
-                        node.y = i;
+                        node.X = j;
+                        node.Y = i;
                     }
                     else
                     {
@@ -141,8 +141,8 @@ namespace PathfindingUnitTestProject
                         if (j == 0)
                         {
                             GenericGraphNode node = map.Add(map[upperIndex]);
-                            node.x = j;
-                            node.y = i;
+                            node.X = j;
+                            node.Y = i;
                         }
                         else if (j > 0)
                         {
@@ -153,8 +153,8 @@ namespace PathfindingUnitTestProject
                             };
 
                             GenericGraphNode node = map.Add(targetNodes);
-                            node.x = j;
-                            node.y = i;
+                            node.X = j;
+                            node.Y = i;
                         }
                     }
                 }
