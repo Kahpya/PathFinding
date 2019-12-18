@@ -8,8 +8,8 @@ namespace PathfindingConsoleProject.DataStructures
 {
     public class GenericGraphNode
     {
-        public int x;
-        public int y;
+        public int X;
+        public int Y;
 
         public GenericGraphNode[] Neighbours { get => neighbours; }
         GenericGraphNode[] neighbours;

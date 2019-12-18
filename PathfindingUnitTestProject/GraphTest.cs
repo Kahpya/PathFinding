@@ -34,6 +34,46 @@ namespace PathfindingUnitTestProject
         }
 
         [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void GenericGraph_Set_Index_Out_Range_MinusOne()
+        {
+            GenericGraph list = new GenericGraph();
+
+            GenericGraphNode actual = list[1] = null;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void GenericGraph_Set_Index_Out_Range_PlusOne()
+        {
+            GenericGraph list = new GenericGraph();
+
+            GenericGraphNode actual = list[1] = null;
+        }
+
+        [TestMethod]
+        public void GenericGraph_CountOnInstantiation()
+        {
+            int expected = 0;
+            GenericGraph list = new GenericGraph();
+
+            Assert.AreEqual(expected, list.Count);
+        }
+
+        [TestMethod]
+        public void GenericGraph_CountOnAdding()
+        {
+            int expected = 6;
+            GenericGraph list = new GenericGraph();
+            for (int i = 0; i < expected; i++)
+            {
+                list.Add();
+            }
+
+            Assert.AreEqual(expected, list.Count);
+        }
+
+        [TestMethod]
         public void GenericGraph_Resize()
         {
             int initalSize = 2;
@@ -96,7 +136,7 @@ namespace PathfindingUnitTestProject
                 && fourthNode.Neighbours.Length == 2);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void GenericGraph_FirstTwoNodesHaveAutomaticEdgesBetweenThem()
         {
             GenericGraph map = new GenericGraph();
@@ -104,10 +144,28 @@ namespace PathfindingUnitTestProject
             GenericGraphNode firstNode = map.Add();
             GenericGraphNode secondNode = map.Add();
 
-            Assert.AreEqual(firstNode.Neighbours[0].FromNode, secondNode);
-        }*/
+            Assert.AreEqual(firstNode.Neighbours[0], secondNode);
+        }
 
-        /*[TestMethod]
+        [TestMethod]
+        public void GenericGraph_AllNodesHaveAutomaticEdgesBetweenThem()
+        {
+            GenericGraph map = new GenericGraph();
+
+            GenericGraphNode firstNode = map.Add();
+            GenericGraphNode secondNode = map.Add();
+            GenericGraphNode third = map.Add();
+            GenericGraphNode fourth = map.Add();
+
+            Assert.IsTrue(firstNode.Neighbours[0].Equals( secondNode) 
+                && secondNode.Neighbours[0].Equals(firstNode) 
+                && secondNode.Neighbours[1].Equals(third)
+                && third.Neighbours[0].Equals(secondNode)
+                && third.Neighbours[1].Equals(fourth)
+                && fourth.Neighbours[0].Equals(third));
+        }
+
+        [TestMethod]
         public void GenericGraph_CanCreateEdgesBetweenSpecificNodes()
         {
             GenericGraph map = new GenericGraph();
@@ -116,7 +174,7 @@ namespace PathfindingUnitTestProject
             GenericGraphNode secondNode = map.Add();
             GenericGraphNode thirdNode = map.Add(firstNode);
 
-            Assert.AreEqual(firstNode.Neighbours[1].FromNode, thirdNode);
-        }*/
+            Assert.AreEqual(firstNode.Neighbours[1], thirdNode);
+        }
     }
 }

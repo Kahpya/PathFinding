@@ -69,7 +69,22 @@ namespace PathfindingConsoleProject.GameClasses
             availableNames.Remove(name);
 
             Console.ForegroundColor = Program.TextColorCustomerEnterStore;
-            Console.WriteLine(name + " has entered the store.");
+            Console.Write(name + " has entered the store and wants to buy ");
+
+            for (int i = 0; i < shoppingBasket.Count -1; i++)
+            {
+                Console.ForegroundColor = Program.TextColorCoordinates;
+                Console.Write($"{shoppingBasket[i].ItemType.ToString()}");
+
+                Console.ForegroundColor = Program.TextColorCustomerEnterStore;
+                Console.Write(", ");
+
+            }
+            Console.ForegroundColor = Program.TextColorCoordinates;
+            Console.Write($"{shoppingBasket[shoppingBasket.Count - 1].ItemType.ToString()}");
+
+            Console.ForegroundColor = Program.TextColorCustomerEnterStore;
+            Console.WriteLine(".");
 
             // Create new customer who is starting at the same position as the kasseapparat
             return new Customer(name, shoppingBasket, PointOfPurchase.Instance.StoreLocation);
