@@ -6,7 +6,7 @@ namespace PathfindingConsoleProject.Algorithms
 {
     public static class BreathFirstSeach
     {
-        static GenericList<GenericGraphNode> FindPathBetweenNodes(GenericGraphNode source, GenericGraphNode goal)
+        public static GenericList<GenericGraphNode> FindPathBetweenNodes(GenericGraphNode source, GenericGraphNode goal)
         {
             if (source.Equals(goal))
             {

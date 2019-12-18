@@ -16,23 +16,25 @@ namespace PathfindingConsoleProject
         // Values must match an index in the storeMap (ie between 0 & mapWidth * mapHeight)
         public static int[] ItemLocationGridArray = new int[]
         {
-            7,
-            23,
-            49,
-            50,
-            75,
-            91
+            5, // 5 max
+            6, // 11 max
+            14, // 17 max
+            21, // 23 max
+            23, // 29 max
+            32 // 35 max
         };
 
         public static GenericGraph StoreMapLayout;
         public static ConsoleColor TextColorPointOfPurchase = ConsoleColor.Green;
         public static ConsoleColor TextColorCustomerPickUpItem = ConsoleColor.Blue;
         public static ConsoleColor TextColorCustomerMoves = ConsoleColor.Yellow;
+        public static ConsoleColor TextColorCoordinates = ConsoleColor.White;
         public static ConsoleColor TextColorCustomerEnterStore = ConsoleColor.Cyan;
+        public static ConsoleColor TextColorCustomerCalculatedPath = ConsoleColor.Magenta;
         public static Random RandomNumberGenerator = new Random();
         private static double chanceToSpawnCustomer = 0.3;
-        private static int mapWidth = 10;
-        private static int mapHeight = 10;
+        private static int mapWidth = 6;
+        private static int mapHeight = 6;
 
         
 
@@ -42,7 +44,7 @@ namespace PathfindingConsoleProject
             long msBetweenNewCustomers = 1000;
             long currentTimeGoal = 0;
 
-            CustomerFactory customerFactory = new CustomerFactory(5);
+            CustomerFactory customerFactory = new CustomerFactory(3);
             GenericList<Customer> customersInStore = new GenericList<Customer>();
             StoreMapLayout = CreateGraphMap();
 
@@ -93,14 +95,14 @@ namespace PathfindingConsoleProject
                     if (i == 0 && j == 0)
                     {
                         GenericGraphNode node = map.Add(); // Add upper left corner
-                        node.x = j;
-                        node.y = i;
+                        node.X = j;
+                        node.Y = i;
                     }
                     else if (i == 0 && j > 0)
                     {
                         GenericGraphNode node = map.Add(map[j - 1]); // add first row
-                        node.x = j;
-                        node.y = i;
+                        node.X = j;
+                        node.Y = i;
                     }
                     else
                     {
@@ -109,8 +111,8 @@ namespace PathfindingConsoleProject
                         if (j == 0)
                         {
                             GenericGraphNode node = map.Add(map[upperIndex]);
-                            node.x = j;
-                            node.y = i;
+                            node.X = j;
+                            node.Y = i;
                         }
                         else if (j > 0)
                         {
@@ -121,8 +123,8 @@ namespace PathfindingConsoleProject
                             };
 
                             GenericGraphNode node = map.Add(targetNodes);
-                            node.x = j;
-                            node.y = i;
+                            node.X = j;
+                            node.Y = i;
                         }
                     }
                 }
